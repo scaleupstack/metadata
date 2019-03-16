@@ -12,9 +12,11 @@ You will be able to register your own feature analyzers that extend the metadata
 Use [Composer] to install this library:
 
 ```
-$ composer require scaleupventures/metadata dev-master
+$ composer require scaleupstack/annotations dev-master
+$ composer require scaleupstack/metadata dev-master
 ```
 
+(As ScaleUpStack/Annotations has no stable relase yet, you need to require it as well.)
 
 ## Introduction
 
