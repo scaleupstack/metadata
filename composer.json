@@ -1,0 +1,42 @@
+{
+    "name": "scaleupstack/metadata",
+    "description": "Extendable Metadata analysis and pre-processing. Based on jms/metadata.",
+    "type": "library",
+    "keywords": [
+        "metadata",
+        "class",
+        "object",
+        "property",
+        "method",
+        "annotations",
+        "typed properties",
+        "virtual methods",
+        "virtual properties"
+    ],
+    "autoload": {
+        "psr-4": {
+            "ScaleUpStack\\Metadata\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ScaleUpStack\\Metadata\\Tests\\": ["tests/"]
+        }
+    },
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Thomas Nunninger",
+            "email": "thomas.nunninger@scaleupventures.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "scaleupstack/assert": "^1.",
+        "scaleupstack/reflection": "dev-master",
+        "jms/metadata": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7."
+    }
+}
