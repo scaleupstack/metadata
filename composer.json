@@ -1,17 +1,14 @@
 {
     "name": "scaleupstack/metadata",
-    "description": "Extendable Metadata analysis and pre-processing. Based on jms/metadata.",
+    "description": "Extendable PHP metadata analysis and pre-processing. Based on jms/metadata.",
     "type": "library",
     "keywords": [
         "metadata",
         "class",
-        "object",
         "property",
         "method",
         "annotations",
-        "typed properties",
-        "virtual methods",
-        "virtual properties"
+        "reflection"
     ],
     "autoload": {
         "psr-4": {
@@ -34,7 +31,8 @@
         "php": ">=7.2.0",
         "scaleupstack/assert": "^1.",
         "scaleupstack/reflection": "dev-master",
-        "jms/metadata": "^2.0"
+        "jms/metadata": "^2.0",
+        "scaleupstack/annotations": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^7."
