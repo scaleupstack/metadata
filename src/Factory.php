@@ -14,6 +14,8 @@ namespace ScaleUpStack\Metadata;
 
 use Metadata\ClassHierarchyMetadata;
 use Metadata\MetadataFactory;
+use ScaleUpStack\Metadata\Generator\FileLocator;
+use ScaleUpStack\Metadata\Generator\FromFileReader;
 
 final class Factory
 {

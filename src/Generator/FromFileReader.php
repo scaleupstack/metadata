@@ -10,7 +10,7 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata;
+namespace ScaleUpStack\Metadata\Generator;
 
 use Metadata\Driver\AbstractFileDriver;
 use ScaleUpStack\Annotations\Annotations;

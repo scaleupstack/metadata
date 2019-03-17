@@ -10,11 +10,12 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Tests\PhpUnit;
+namespace ScaleUpStack\Metadata\Tests\PhpUnit\Generator;
 
 use Metadata\MetadataFactory;
 use ScaleUpStack\Annotations\Annotations;
-use ScaleUpStack\Metadata\FromFileReader;
+use ScaleUpStack\Metadata\Generator\FileLocator;
+use ScaleUpStack\Metadata\Generator\FromFileReader;
 use ScaleUpStack\Metadata\Metadata\ClassMetadata;
 use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
 use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
@@ -23,7 +24,7 @@ use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Metadata\FromFileReader
+ * @coversDefaultClass \ScaleUpStack\Metadata\Generator\FromFileReader
  */
 final class FromFileReaderTest extends TestCase
 {
@@ -36,7 +37,7 @@ final class FromFileReaderTest extends TestCase
     {
         parent::setUp();
 
-        $fileLocator = new \ScaleUpStack\Metadata\FileLocator();
+        $fileLocator = new FileLocator();
         $this->factory = new MetadataFactory(
             new FromFileReader($fileLocator)
         );
@@ -44,7 +45,7 @@ final class FromFileReaderTest extends TestCase
 
     /**
      * @test
-     * @covers \ScaleUpStack\Metadata\FileLocator::findFileForClass()
+     * @covers \ScaleUpStack\Metadata\Generator\FileLocator::findFileForClass()
      * @covers ::getExtension()
      * @covers ::loadMetadataFromFile()
      * @covers ::extractClassLevelMetadata()
