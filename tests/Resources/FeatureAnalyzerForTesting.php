@@ -17,8 +17,13 @@ use ScaleUpStack\Metadata\Generator\FeatureAnalyzer;
 
 final class FeatureAnalyzerForTesting implements FeatureAnalyzer
 {
-    public function extractMetadata(ClassMetadata $classMetadata)
+    public function name() : string
     {
-        return new \stdClass();
+        return 'forTesting';
+    }
+
+    public function extractMetadata(ClassMetadata $classMetadata) : array
+    {
+        return ['some value'];
     }
 }

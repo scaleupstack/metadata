@@ -20,9 +20,9 @@ final class Configuration
 
     private static $configuration = [];
 
-    public static function registerFeatureAnalyzer(string $name, FeatureAnalyzer $featureAnalyzer)
+    public static function registerFeatureAnalyzer(FeatureAnalyzer $featureAnalyzer)
     {
-        self::$configuration[self::KEY_FEATURE_ANALYZERS][$name] = $featureAnalyzer;
+        self::$configuration[self::KEY_FEATURE_ANALYZERS][] = $featureAnalyzer;
     }
 
     /**

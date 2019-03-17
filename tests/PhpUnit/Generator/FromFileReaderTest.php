@@ -164,7 +164,7 @@ final class FromFileReaderTest extends TestCase
         // given a factory as provided via setUp() and a class name
         $className = ClassForTesting::class;
         // and a FeatureAnalyzer in the Configuration
-        Configuration::registerFeatureAnalyzer('forTesting', new FeatureAnalyzerForTesting());
+        Configuration::registerFeatureAnalyzer(new FeatureAnalyzerForTesting());
 
         // when retrieving the metadata
         $hierarchyMetadata = $this->factory->getMetadataForClass($className);
@@ -176,7 +176,7 @@ final class FromFileReaderTest extends TestCase
         // then the FeatureAnalyzer has added some date to the features property
         $this->assertEquals(
             [
-                'forTesting' => new \stdClass()
+                'forTesting' => ['some value'],
             ],
             $classMetadata->features
         );

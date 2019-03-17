@@ -27,7 +27,7 @@ final class FromFileReader extends AbstractFileDriver
 
         $classMetadata = $this->extractClassLevelMetadata($class, $docBlockParser);
         $this->extractPropertyLevelMetaData($class, $docBlockParser, $classMetadata);
-        $this->analyzeRegisteredFeatures($class, $classMetadata);
+        $this->analyzeRegisteredFeatures($classMetadata);
 
         return $classMetadata;
     }
@@ -89,16 +89,15 @@ final class FromFileReader extends AbstractFileDriver
         }
     }
 
-    private function analyzeRegisteredFeatures(\ReflectionClass $reflectionClass, ClassMetadata $classMetadata)
+    private function analyzeRegisteredFeatures(ClassMetadata $classMetadata)
     {
         $featureAnalyzers = Configuration::featureAnalyzers();
 
-        foreach ($featureAnalyzers as $key => $analyzer)
-        {
-            $featureMetadata = $analyzer->extractMetadata($classMetadata);
-            if (!is_null($featureMetadata)) {
-                $classMetadata->features[$key] = $featureMetadata;
-            }
+        foreach ($featureAnalyzers as $analyzer) {
+            $key = $analyzer->name();
+            $metadata =  $analyzer->extractMetadata($classMetadata);
+
+            $classMetadata->features[$key] = $metadata;
         }
     }
 

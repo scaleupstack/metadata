@@ -54,19 +54,16 @@ final class ConfigurationTest extends TestCase
      */
     public function it_registers_features_and_allows_to_retrieve_them()
     {
-        // given a feature analyzer and a short name
-        $shortName = 'mocked';
+        // given a feature analyzer
         /** @var FeatureAnalyzer $featureAnalyzer */
         $featureAnalyzer = $this->getMockForAbstractClass(FeatureAnalyzer::class);
 
         // when registering the feature analyzer on the short name in the Configuration
-        Configuration::registerFeatureAnalyzer($shortName, $featureAnalyzer);
+        Configuration::registerFeatureAnalyzer($featureAnalyzer);
 
         // then the feature analyzer is stored in the Configuration
         $this->assertSame(
-            [
-                $shortName => $featureAnalyzer,
-            ],
+            [$featureAnalyzer],
             Configuration::featureAnalyzers()
         );
     }
