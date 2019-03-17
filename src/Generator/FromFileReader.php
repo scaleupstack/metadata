@@ -15,6 +15,7 @@ namespace ScaleUpStack\Metadata\Generator;
 use Metadata\Driver\AbstractFileDriver;
 use ScaleUpStack\Annotations\Annotations;
 use ScaleUpStack\Annotations\DocBlockParser;
+use ScaleUpStack\Metadata\Configuration;
 use ScaleUpStack\Metadata\Metadata\ClassMetadata;
 use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
 
@@ -26,6 +27,7 @@ final class FromFileReader extends AbstractFileDriver
 
         $classMetadata = $this->extractClassLevelMetadata($class, $docBlockParser);
         $this->extractPropertyLevelMetaData($class, $docBlockParser, $classMetadata);
+        $this->analyzeRegisteredFeatures($class, $classMetadata);
 
         return $classMetadata;
     }
@@ -84,6 +86,19 @@ final class FromFileReader extends AbstractFileDriver
                     $docBlockParser->parse($docBlock, Annotations::CONTEXT_PROPERTY)
                 )
             );
+        }
+    }
+
+    private function analyzeRegisteredFeatures(\ReflectionClass $reflectionClass, ClassMetadata $classMetadata)
+    {
+        $featureAnalyzers = Configuration::featureAnalyzers();
+
+        foreach ($featureAnalyzers as $key => $analyzer)
+        {
+            $featureMetadata = $analyzer->extractMetadata($classMetadata);
+            if (!is_null($featureMetadata)) {
+                $classMetadata->features[$key] = $featureMetadata;
+            }
         }
     }
 

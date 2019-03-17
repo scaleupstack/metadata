@@ -10,16 +10,15 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Generator;
+namespace ScaleUpStack\Metadata\Tests\Resources;
 
 use ScaleUpStack\Metadata\Metadata\ClassMetadata;
+use ScaleUpStack\Metadata\Generator\FeatureAnalyzer;
 
-interface FeatureAnalyzer
+final class FeatureAnalyzerForTesting implements FeatureAnalyzer
 {
-    /**
-     * NOTE: Do not manipulate the $classMetadata yourself but just return the extracted metadata.
-     *
-     * @return mixed
-     */
-    public function extractMetadata(ClassMetadata $classMetadata);
+    public function extractMetadata(ClassMetadata $classMetadata)
+    {
+        return new \stdClass();
+    }
 }

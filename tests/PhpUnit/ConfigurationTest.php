@@ -15,6 +15,7 @@ namespace ScaleUpStack\Metadata\Tests\PhpUnit;
 use ScaleUpStack\Metadata\Configuration;
 use ScaleUpStack\Metadata\Generator\FeatureAnalyzer;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
+use ScaleUpStack\Reflection\Reflection;
 
 /**
  * @coversDefaultClass \ScaleUpStack\Metadata\Configuration
@@ -43,5 +44,12 @@ final class ConfigurationTest extends TestCase
             ],
             Configuration::featureAnalyzers()
         );
+    }
+
+    public function tearDown()
+    {
+        $configuration = Reflection::getStaticPropertyValue(Configuration::class, 'configuration');
+        unset($configuration['featureAnalyzers']['mocked']);
+        Reflection::setStaticPropertyValue(Configuration::class, 'configuration', $configuration);
     }
 }
