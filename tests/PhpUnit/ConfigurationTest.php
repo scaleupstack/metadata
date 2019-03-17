@@ -22,6 +22,31 @@ use ScaleUpStack\Reflection\Reflection;
  */
 final class ConfigurationTest extends TestCase
 {
+    private $oldConfiguration;
+
+    public function setUp()
+    {
+        $this->oldConfiguration = Reflection::getStaticPropertyValue(Configuration::class, 'configuration');
+        Reflection::setStaticPropertyValue(Configuration::class, 'configuration', []);
+    }
+
+    /**
+     * @test
+     * @covers ::featureAnalyzers()
+     */
+    public function it_returns_an_empty_array_if_no_feature_analyzers_have_been_registered()
+    {
+        // given an unconfigured Configuration as reset in setUp()
+
+        // when fetching the feature analyzers from the configuration
+        $configuredAnalyzers = Configuration::featureAnalyzers();
+
+        // then an empty array is returned
+        $this->assertSame(
+            [],
+            $configuredAnalyzers
+        );
+    }
     /**
      * @test
      * @covers ::registerFeatureAnalyzer()
@@ -48,8 +73,6 @@ final class ConfigurationTest extends TestCase
 
     public function tearDown()
     {
-        $configuration = Reflection::getStaticPropertyValue(Configuration::class, 'configuration');
-        unset($configuration['featureAnalyzers']['mocked']);
-        Reflection::setStaticPropertyValue(Configuration::class, 'configuration', $configuration);
+        Reflection::setStaticPropertyValue(Configuration::class, 'configuration', $this->oldConfiguration);
     }
 }

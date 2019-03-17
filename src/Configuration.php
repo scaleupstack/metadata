@@ -30,6 +30,10 @@ final class Configuration
      */
     public static function featureAnalyzers() : array
     {
+        if (! array_key_exists(self::KEY_FEATURE_ANALYZERS, self::$configuration)) {
+            self::$configuration[self::KEY_FEATURE_ANALYZERS] = [];
+        }
+
         return self::$configuration[self::KEY_FEATURE_ANALYZERS];
     }
 }
