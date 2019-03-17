@@ -12,9 +12,7 @@
 
 namespace ScaleUpStack\Metadata\Metadata;
 
-use ScaleUpStack\Annotations\Annotation\MethodAnnotation;
 use ScaleUpStack\Annotations\Annotations;
-use ScaleUpStack\Metadata\InvalidArgumentException;
 
 class ClassMetadata extends \Metadata\ClassMetadata
 {
@@ -40,11 +38,6 @@ class ClassMetadata extends \Metadata\ClassMetadata
     public $features = [];
 
     /**
-     * @var VirtualMethodMetadata[]
-     */
-    public $virtualMethods = [];
-
-    /**
      * @param string[] $useStatements
      */
     public function __construct(string $name, array $useStatements, Annotations $annotations)
@@ -53,7 +46,6 @@ class ClassMetadata extends \Metadata\ClassMetadata
         $this->setNamespace($name);
         $this->setUseStatements($useStatements);
         $this->annotations = $annotations;
-        $this->setVirtualMethods($annotations);
     }
 
     private function setNamespace(string $className)
@@ -81,36 +73,6 @@ class ClassMetadata extends \Metadata\ClassMetadata
             } else {
                 // TODO: throw
             }
-        }
-    }
-
-    private function setVirtualMethods(Annotations $annotations)
-    {
-        /** @var MethodAnnotation $methodAnnotation */
-        foreach ($annotations->annotationsByTag('method') as $methodAnnotation) {
-            $parameters = [];
-            foreach ($methodAnnotation->parameters() as $parameterName => $parameterData) {
-                if (false !== $parameterData['hasDefaultValue']) {
-                    throw new InvalidArgumentException(
-                        'Currently, default values are not supported in virtual methods.'
-                    );
-                }
-
-                $parameters[$parameterName] = new DataTypeMetadata(
-                    $this->fullyQualifiedDataTypeSpecification($parameterData['dataType'])
-                );
-            }
-
-            $returnType = new DataTypeMetadata(
-                $this->fullyQualifiedDataTypeSpecification($methodAnnotation->returnType())
-            );
-
-            $this->virtualMethods[$methodAnnotation->methodName()] = new VirtualMethodMetadata(
-                $this->name,
-                $methodAnnotation->methodName(),
-                $parameters,
-                $returnType
-            );
         }
     }
 
@@ -167,7 +129,6 @@ class ClassMetadata extends \Metadata\ClassMetadata
                 $this->useStatements,
                 $this->annotations,
                 $this->features,
-                $this->virtualMethods,
             ]
         );
     }
@@ -182,7 +143,6 @@ class ClassMetadata extends \Metadata\ClassMetadata
             $useStatements,
             $annotations,
             $features,
-            $virtualMethods
         ) = unserialize($str);
 
         parent::unserialize($parent);
@@ -191,6 +151,5 @@ class ClassMetadata extends \Metadata\ClassMetadata
         $this->useStatements = $useStatements;
         $this->annotations = $annotations;
         $this->features = $features;
-        $this->virtualMethods = $virtualMethods;
     }
 }

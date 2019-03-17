@@ -79,25 +79,6 @@ final class FromFileReaderTest extends TestCase
             ],
             $classMetadata->useStatements
         );
-
-        //and the virtual methods are available
-        $this->assertEquals(
-            $classMetadata->virtualMethods,
-            [
-                 'secondProperty' => new VirtualMethodMetadata(
-                     $className,
-                     'secondProperty',
-                     [],
-                     new DataTypeMetadata('string')
-                 ),
-                 'getThirdProperty' => new VirtualMethodMetadata(
-                     $className,
-                     'getThirdProperty',
-                     [],
-                     new DataTypeMetadata('string')
-                 ),
-            ]
-        );
     }
 
     /**

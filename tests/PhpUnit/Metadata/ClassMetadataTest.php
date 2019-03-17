@@ -13,10 +13,7 @@
 namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
 
 use ScaleUpStack\Annotations\Annotations;
-use ScaleUpStack\Metadata\InvalidArgumentException;
 use ScaleUpStack\Metadata\Metadata\ClassMetadata;
-use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
-use ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 
@@ -30,9 +27,8 @@ final class ClassMetadataTest extends TestCase
      * @covers ::__construct()
      * @covers ::setNamespace()
      * @covers ::setUseStatements()
-     * @covers ::setVirtualMethods()
      */
-    public function it_stores_metadata_for_virtual_methods()
+    public function it_stores_class_level_metadata()
     {
         // given a class name
         $className = ClassForTesting::class;
@@ -62,46 +58,6 @@ final class ClassMetadataTest extends TestCase
         );
         // and the annotations are stored while the virtual methods are available directly
         $this->assertSame($annotations, $classMetadata->annotations);
-
-        $this->assertEquals(
-            [
-                'getSomeProperty' => new VirtualMethodMetadata(
-                    $className,
-                    'getSomeProperty',
-                    [],
-                    new DataTypeMetadata('Metadata\ClassMetadata[]')
-                ),
-                'withSomeProperty' => new VirtualMethodMetadata(
-                    $className,
-                    'withSomeProperty',
-                    [
-                        'someValue' => new DataTypeMetadata('ScaleUpStack\Annotations\Annotation\MethodAnnotation'),
-                    ],
-                    new DataTypeMetadata('self')
-                ),
-            ],
-            $classMetadata->virtualMethods
-        );
-    }
-
-    /**
-     * @test
-     * @covers ::setVirtualMethods()
-     */
-    public function it_does_not_allow_default_values_in_virtual_methods()
-    {
-        // given a class name
-        $className = ClassForTesting::class;
-        // and some Annotations with a MethodAnnotation that has a default value
-        $annotations = new Annotations();
-        $annotations->add('method', 'getSomeProperty($someParameter = null)', Annotations::CONTEXT_CLASS);
-
-        // when creating the ClassMetadata
-        // then an exception is thrown
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Currently, default values are not supported in virtual methods.');
-
-        new ClassMetadata($className, [], $annotations);
     }
 
     /**
