@@ -35,6 +35,11 @@ class ClassMetadata extends \Metadata\ClassMetadata
     public $annotations;
 
     /**
+     * @var array
+     */
+    public $features = [];
+
+    /**
      * @var VirtualMethodMetadata[]
      */
     public $virtualMethods = [];
@@ -161,6 +166,7 @@ class ClassMetadata extends \Metadata\ClassMetadata
                 parent::serialize(),
                 $this->useStatements,
                 $this->annotations,
+                $this->features,
                 $this->virtualMethods,
             ]
         );
@@ -175,6 +181,7 @@ class ClassMetadata extends \Metadata\ClassMetadata
             $parent,
             $useStatements,
             $annotations,
+            $features,
             $virtualMethods
         ) = unserialize($str);
 
@@ -183,6 +190,7 @@ class ClassMetadata extends \Metadata\ClassMetadata
         $this->setNamespace($this->name);
         $this->useStatements = $useStatements;
         $this->annotations = $annotations;
+        $this->features = $features;
         $this->virtualMethods = $virtualMethods;
     }
 }

@@ -122,6 +122,7 @@ final class ClassMetadataTest extends TestCase
             ],
             $annotations
         );
+        $metadata->features['someFeature'] = new \stdClass();
 
         // when serializing and unserializing the metadata
         $unserializedMetadata = unserialize(serialize($metadata));
