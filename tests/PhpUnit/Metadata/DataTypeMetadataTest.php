@@ -10,14 +10,14 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Tests\PhpUnit;
+namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
 
-use ScaleUpStack\Metadata\DataTypeMetadata;
+use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 use ScaleUpStack\Metadata\UnexpectedValueException;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Metadata\DataTypeMetadata
+ * @coversDefaultClass \ScaleUpStack\Metadata\Metadata\DataTypeMetadata
  */
 class DataTypeMetadataTest extends TestCase
 {

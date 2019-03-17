@@ -14,11 +14,11 @@ namespace ScaleUpStack\Metadata\Tests\PhpUnit;
 
 use Metadata\MetadataFactory;
 use ScaleUpStack\Annotations\Annotations;
-use ScaleUpStack\Metadata\ClassMetadata;
-use ScaleUpStack\Metadata\DataTypeMetadata;
 use ScaleUpStack\Metadata\FromFileReader;
-use ScaleUpStack\Metadata\PropertyMetadata;
-use ScaleUpStack\Metadata\VirtualMethodMetadata;
+use ScaleUpStack\Metadata\Metadata\ClassMetadata;
+use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
+use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
+use ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 

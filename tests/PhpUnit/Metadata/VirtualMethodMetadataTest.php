@@ -10,14 +10,14 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Tests\PhpUnit;
+namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
 
-use ScaleUpStack\Metadata\DataTypeMetadata;
-use ScaleUpStack\Metadata\VirtualMethodMetadata;
+use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
+use ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Metadata\VirtualMethodMetadata
+ * @coversDefaultClass \ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata
  */
 final class VirtualMethodMetadataTest extends TestCase
 {

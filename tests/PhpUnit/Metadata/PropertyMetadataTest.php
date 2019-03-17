@@ -10,15 +10,15 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Tests\PhpUnit;
+namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
 
 use ScaleUpStack\Annotations\Annotations;
-use ScaleUpStack\Metadata\PropertyMetadata;
+use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Metadata\PropertyMetadata
+ * @coversDefaultClass \ScaleUpStack\Metadata\Metadata\PropertyMetadata
  */
 final class PropertyMetadataTest extends TestCase
 {

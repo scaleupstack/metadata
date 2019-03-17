@@ -13,7 +13,6 @@
 namespace ScaleUpStack\Metadata\Tests\PhpUnit;
 
 use Metadata\ClassHierarchyMetadata;
-use ScaleUpStack\Metadata\ClassMetadata;
 use ScaleUpStack\Metadata\Factory;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;

@@ -10,18 +10,18 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Tests\PhpUnit;
+namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
 
 use ScaleUpStack\Annotations\Annotations;
 use ScaleUpStack\Metadata\InvalidArgumentException;
-use ScaleUpStack\Metadata\ClassMetadata;
-use ScaleUpStack\Metadata\DataTypeMetadata;
-use ScaleUpStack\Metadata\VirtualMethodMetadata;
+use ScaleUpStack\Metadata\Metadata\ClassMetadata;
+use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
+use ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Metadata\ClassMetadata
+ * @coversDefaultClass \ScaleUpStack\Metadata\Metadata\ClassMetadata
  */
 final class ClassMetadataTest extends TestCase
 {

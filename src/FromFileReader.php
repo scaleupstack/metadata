@@ -15,6 +15,8 @@ namespace ScaleUpStack\Metadata;
 use Metadata\Driver\AbstractFileDriver;
 use ScaleUpStack\Annotations\Annotations;
 use ScaleUpStack\Annotations\DocBlockParser;
+use ScaleUpStack\Metadata\Metadata\ClassMetadata;
+use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
 
 final class FromFileReader extends AbstractFileDriver
 {

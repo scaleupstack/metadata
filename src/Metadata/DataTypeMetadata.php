@@ -10,7 +10,7 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata;
+namespace ScaleUpStack\Metadata\Metadata;
 
 use ScaleUpStack\Metadata\Assert;
 use ScaleUpStack\Metadata\UnexpectedValueException;
