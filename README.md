@@ -30,7 +30,7 @@ This library is not yet documented and still under development. It will evolve i
 
 ## Contribute
 
-Thanks that you want to contribute to ScaleUpVentures/Metadata.
+Thanks that you want to contribute to ScaleUpStack/Metadata.
 
 * Report any bugs or issues on the [issue tracker].
 
