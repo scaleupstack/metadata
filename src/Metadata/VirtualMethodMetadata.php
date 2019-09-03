@@ -29,7 +29,7 @@ final class VirtualMethodMetadata
     /**
      * @var DataTypeMetadata[]
      */
-    public $paramters = [];
+    public $parameters = [];
 
     /**
      * @var DataTypeMetadata
@@ -54,7 +54,7 @@ final class VirtualMethodMetadata
 
         $this->class = $class;
         $this->name = $name;
-        $this->paramters = $parameters;
+        $this->parameters = $parameters;
         $this->returnType = $returnType;
     }
 }

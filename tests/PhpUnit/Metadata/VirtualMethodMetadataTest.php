@@ -42,7 +42,7 @@ final class VirtualMethodMetadataTest extends TestCase
         // then the values are set
         $this->assertSame($className, $metadata->class);
         $this->assertSame($methodName, $metadata->name);
-        $this->assertSame($parameters, $metadata->paramters);
+        $this->assertSame($parameters, $metadata->parameters);
         $this->assertSame($returnType, $metadata->returnType);
     }
 }
