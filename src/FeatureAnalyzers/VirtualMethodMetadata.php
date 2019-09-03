@@ -10,9 +10,10 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Metadata;
+namespace ScaleUpStack\Metadata\FeatureAnalyzers;
 
 use ScaleUpStack\Metadata\Assert;
+use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
 
 final class VirtualMethodMetadata
 {
@@ -37,10 +38,21 @@ final class VirtualMethodMetadata
     public $returnType;
 
     /**
+     * @var bool
+     */
+    public $isStatic;
+
+    /**
      * @param DataTypeMetadata[] $parameters
      *        <parameterName> => <DataTypeMetadata>
      */
-    public function __construct(string $class, string $name, array $parameters, DataTypeMetadata $returnType)
+    public function __construct(
+        string $class,
+        string $name,
+        array $parameters,
+        DataTypeMetadata $returnType,
+        bool $isStatic
+    )
     {
         Assert::allIsInstanceOf(
             $parameters,
@@ -56,5 +68,6 @@ final class VirtualMethodMetadata
         $this->name = $name;
         $this->parameters = $parameters;
         $this->returnType = $returnType;
+        $this->isStatic = $isStatic;
     }
 }

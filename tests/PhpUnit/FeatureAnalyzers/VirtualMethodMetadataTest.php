@@ -10,14 +10,14 @@
  * @link      https://github.com/scaleupstack/metadata
  */
 
-namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
+namespace ScaleUpStack\Metadata\Tests\PhpUnit\FeatureAnalyzers;
 
+use ScaleUpStack\Metadata\FeatureAnalyzers\VirtualMethodMetadata;
 use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
-use ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Metadata\Metadata\VirtualMethodMetadata
+ * @coversDefaultClass \ScaleUpStack\Metadata\FeatureAnalyzers\VirtualMethodMetadata
  */
 final class VirtualMethodMetadataTest extends TestCase
 {
@@ -37,7 +37,7 @@ final class VirtualMethodMetadataTest extends TestCase
         $returnType = new DataTypeMetadata('\DateTime');
 
         // when constructing the VirtualMethodMetadata
-        $metadata = new VirtualMethodMetadata($className, $methodName, $parameters, $returnType);
+        $metadata = new VirtualMethodMetadata($className, $methodName, $parameters, $returnType, false);
 
         // then the values are set
         $this->assertSame($className, $metadata->class);

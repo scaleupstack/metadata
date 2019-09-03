@@ -12,6 +12,26 @@
 
 namespace ScaleUpStack\Metadata\Tests\Resources;
 
+use ScaleUpStack\Metadata\Configuration;
+use ScaleUpStack\Metadata\Generator\FeatureAnalyzer;
+use ScaleUpStack\Reflection\Reflection;
+
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    private static $oldConfiguration = null;
+
+    protected static function setupFeatureAnalyzer(FeatureAnalyzer $featureAnalyzer)
+    {
+        self::$oldConfiguration = Reflection::getStaticPropertyValue(Configuration::class, 'configuration');
+        Reflection::setStaticPropertyValue(Configuration::class, 'configuration', []);
+
+        Configuration::registerFeatureAnalyzer($featureAnalyzer);
+    }
+
+    public static function tearDownAfterClass()
+    {
+        if (! is_null(self::$oldConfiguration)) {
+            Reflection::setStaticPropertyValue(Configuration::class, 'configuration', self::$oldConfiguration);
+        }
+    }
 }
