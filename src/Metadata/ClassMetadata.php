@@ -66,14 +66,25 @@ class ClassMetadata extends \Metadata\ClassMetadata
                 $this->useStatements[$className] = $useStatement;
             } else if (3 === count($parts)) {
                 if ('as' !== $parts[1]) {
-                    // TODO: throw
+                    $this->throwOnInvalidUseStatement($useStatement);
                 }
 
                 $this->useStatements[$parts[2]] = $parts[0];
             } else {
-                // TODO: throw
+                $this->throwOnInvalidUseStatement($useStatement);
             }
         }
+    }
+
+    private function throwOnInvalidUseStatement(string $useStatement)
+    {
+        throw new \RuntimeException(
+            sprintf(
+                "Invalid use statement '%s' in class %s",
+                $useStatement,
+                $this->name
+            )
+        );
     }
 
     public function fullyQualifiedDataTypeSpecification(?string $originalSpecification) : ?string

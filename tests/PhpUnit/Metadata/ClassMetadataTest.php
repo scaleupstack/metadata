@@ -60,6 +60,43 @@ final class ClassMetadataTest extends TestCase
         $this->assertSame($annotations, $classMetadata->annotations);
     }
 
+    public function provides_wrong_use_statements() : array
+    {
+        return [
+            ['No\As\But\Alias MyAlias'],
+            ['HasAlias\ButNoAs\InMiddle somethingwrong MyAlias'],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_wrong_use_statements
+     * @covers ::setUseStatements()
+     * @covers ::throwOnInvalidUseStatement()
+     */
+    public function it_throws_an_exception_on_wrong_use_statements($wrongUseStatement)
+    {
+        // given a class name
+        $className = ClassForTesting::class;
+        // and an invalid use statements
+        $useStatements = [$wrongUseStatement];
+        // and some Annotations
+        $annotations = new Annotations();
+
+        // when creating the ClassMetadata
+        // then an exception is thrown
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                "Invalid use statement '%s' in class %s",
+                $wrongUseStatement,
+                $className
+            )
+        );
+
+        $classMetadata = new ClassMetadata($className, $useStatements, $annotations);
+    }
+
     /**
      * @test
      * @covers ::serialize()
