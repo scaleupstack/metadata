@@ -131,6 +131,38 @@ class DataTypeMetadataTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function provides_variables_and_if_they_are_valid_self_according_to_corresponding_object_context() : array
+    {
+        return [
+            [new \Exception(), new \Exception(), true],
+            [new \RuntimeException(), new \Exception(), true],
+            [new \Exception(), \Exception::class, true],
+            [new \RuntimeException(), \Exception::class, true],
+            [new \Exception(), \Throwable::class, true],
+
+            [new \Exception(), new \RuntimeException(), false],
+            [new \Exception(), \RuntimeException::class, false],
+            [new \Exception(), new \DateTime(), false],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_variables_and_if_they_are_valid_self_according_to_corresponding_object_context
+     * @covers ::isValidVariableType()
+     */
+    public function it_validates_variables_as_self($variable, $objectContext, $expectedValidationResult)
+    {
+        // given a DataTypeMetadata of type self, and a variable and object context as provided by the test parameters
+        $dataType = new DataTypeMetadata('self');
+
+        // when checking with the variable against the object context
+        $result = $dataType->validateVariable($variable, $objectContext);
+
+        // then the result is as expected (as provided by the test parameter)
+        $this->assertSame($expectedValidationResult, $result);
+    }
+
     public function data_provider_with_invalid_values_for_types()
     {
         return [
@@ -187,7 +219,7 @@ class DataTypeMetadataTest extends TestCase
      * @test
      * @covers ::isValidVariableType()
      */
-    public function it_invalidates_invalid_value_for_this()
+    public function it_invalidates_invalid_values_for_this()
     {
         // given a DataTypeMetadata of type $this
         $dataType = new DataTypeMetadata('$this');
@@ -199,6 +231,25 @@ class DataTypeMetadataTest extends TestCase
 
         // then the result is false
         $this->assertFalse($result);
+    }
+
+    /**
+     * @test
+     * @covers ::isValidVariableType()
+     */
+    public function it_throws_an_exception_when_validating_a_static_object_context_for_this()
+    {
+        // given a DataTypeMetadata of type $this
+        $dataType = new DataTypeMetadata('$this');
+
+        // when checking with $this with a static object context (class name)
+        // then an exception is thrown
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Object context for $this is no object. Is it some static context?');
+
+        $variable = new \stdClass();
+        $objectContext = \Exception::class;
+        $result = $dataType->validateVariable($variable, $objectContext);
     }
 
     public function data_provider_with_empty_datatype_declarations()

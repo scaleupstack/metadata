@@ -30,11 +30,12 @@ class DataTypeMetadata
     }
 
     /**
-     * @param mixed  $variable
-     * @param object $objectContext
-     *        For comparison with declaration '$this'. So needs to be the accurate object instance.
+     * @param mixed $variable
+     * @param object|string $objectContext
+     *        For comparison with declaration '$this' or 'self'. So needs to be the accurate object instance.
+     *        If it is the string of a class name, '$this' is not supported.
      */
-    public function validateVariable($variable, object $objectContext) : bool
+    public function validateVariable($variable, $objectContext) : bool
     {
         if (is_null($this->declaration)) {
             return true;
@@ -82,13 +83,14 @@ class DataTypeMetadata
     }
 
     /**
-     * @param mixed  $variable
+     * @param mixed $variable
+     * @param object|string $objectContext
      */
     private function isValidVariableType(
         ?string $dataTypeDeclaration,
         $variable,
         string $variableDataType,
-        object $objectContext
+        $objectContext
     ) : bool
     {
         $allowedDataTypes = explode('|', $dataTypeDeclaration);
@@ -176,24 +178,35 @@ class DataTypeMetadata
                         // inherent break
 
                     case '$this':
+                        if (! is_object($objectContext)) {
+                            throw new \RuntimeException(
+                                'Object context for $this is no object. Is it some static context?'
+                            );
+                        }
+
                         if ($objectContext === $variable) {
                             return true;
                         }
                         break;
+
+                    case 'self':
+                        if (is_string($objectContext)) {
+                            $objectContext = '\\' . $objectContext;
+                        }
+                        return ($variable instanceof $objectContext);
 
                     case 'callable':
                     case 'callback': // should be transformed in annotation reader
                     case 'iterable':
                     case 'number':
                     case 'numeric':
-                    case 'self':
                     case 'static':
                     case 'resource':
                     case 'resource (closed)':
                         throw new UnexpectedValueException(
                             sprintf('Data type declaration "%s" not handled yet.', $allowedDataType)
                         );
-                    // inherent break
+                        // inherent break
 
                     case '':
                         throw new UnexpectedValueException(
