@@ -99,7 +99,7 @@ class DataTypeMetadataTest extends TestCase
      * @test
      * @dataProvider data_provider_with_valid_values_for_types
      * @covers ::validateVariable()
-     * @covers ::determineVariablesDataType()
+     * @covers ::determineDataTypeOfVariable()
      * @covers ::isValidVariableType()
      */
     public function it_validates_valid_values($dataTypeDeclaration, $validValue)

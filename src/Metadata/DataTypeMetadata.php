@@ -41,14 +41,14 @@ class DataTypeMetadata
             return true;
         }
 
-        $variableDataType = $this->determineVariablesDataType($variable);
-        return $this->isValidVariableType($this->declaration, $variable, $variableDataType, $objectContext);
+        $dataTypeOfVariable = $this->determineDataTypeOfVariable($variable);
+        return $this->isValidVariableType($this->declaration, $variable, $dataTypeOfVariable, $objectContext);
     }
 
     /**
      * @param mixed $variable
      */
-    private function determineVariablesDataType($variable) : string
+    private function determineDataTypeOfVariable($variable) : string
     {
         $type = gettype($variable);
 
@@ -87,7 +87,7 @@ class DataTypeMetadata
      * @param object|string $objectContext
      */
     private function isValidVariableType(
-        ?string $dataTypeDeclaration,
+        string $dataTypeDeclaration,
         $variable,
         string $variableDataType,
         $objectContext
@@ -116,7 +116,7 @@ class DataTypeMetadata
                         $itemResult = $this->isValidVariableType(
                             $typeOfArrayItems,
                             $item,
-                            $this->determineVariablesDataType($item),
+                            $this->determineDataTypeOfVariable($item),
                             $objectContext
                         );
 
