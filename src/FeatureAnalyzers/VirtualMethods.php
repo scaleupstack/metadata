@@ -20,13 +20,6 @@ use ScaleUpStack\Metadata\Metadata\DataTypeMetadata;
 
 final class VirtualMethods implements FeatureAnalyzer
 {
-    const FEATURES_KEY = 'virtualMethods';
-
-    public function name() : string
-    {
-        return self::FEATURES_KEY;
-    }
-
     public function extractMetadata(ClassMetadata $classMetadata) : array
     {
         $virtualMethods = [];

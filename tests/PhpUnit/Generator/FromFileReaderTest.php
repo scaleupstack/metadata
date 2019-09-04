@@ -14,7 +14,6 @@ namespace ScaleUpStack\Metadata\Tests\PhpUnit\Generator;
 
 use Metadata\MetadataFactory;
 use ScaleUpStack\Annotations\Annotations;
-use ScaleUpStack\Metadata\Configuration;
 use ScaleUpStack\Metadata\Generator\FileLocator;
 use ScaleUpStack\Metadata\Generator\FromFileReader;
 use ScaleUpStack\Metadata\Metadata\ClassMetadata;
@@ -22,7 +21,6 @@ use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\FeatureAnalyzerForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
-use ScaleUpStack\Reflection\Reflection;
 
 /**
  * @coversDefaultClass \ScaleUpStack\Metadata\Generator\FromFileReader
@@ -143,7 +141,7 @@ final class FromFileReaderTest extends TestCase
         // given a factory as provided via setUp() and a class name
         $className = ClassForTesting::class;
         // and a FeatureAnalyzer in the Configuration
-        Configuration::registerFeatureAnalyzer(new FeatureAnalyzerForTesting());
+        $this->setupFeatureAnalyzer(new FeatureAnalyzerForTesting());
 
         // when retrieving the metadata
         $hierarchyMetadata = $this->factory->getMetadataForClass($className);
@@ -155,16 +153,9 @@ final class FromFileReaderTest extends TestCase
         // then the FeatureAnalyzer has added some date to the features property
         $this->assertEquals(
             [
-                'forTesting' => ['some value'],
+                FeatureAnalyzerForTesting::class => ['some value'],
             ],
             $classMetadata->features
         );
-    }
-
-    public function tearDown()
-    {
-        $configuration = Reflection::getStaticPropertyValue(Configuration::class, 'configuration');
-        unset($configuration['featureAnalyzers']['forTesting']);
-        Reflection::setStaticPropertyValue(Configuration::class, 'configuration', $configuration);
     }
 }

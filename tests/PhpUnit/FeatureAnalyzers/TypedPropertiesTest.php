@@ -35,7 +35,6 @@ final class TypedPropertiesTest extends TestCase
 
     /**
      * @test
-     * @covers ::name()
      * @covers ::extractMetadata()
      */
     public function it_extracts_typed_properties()
@@ -67,7 +66,7 @@ final class TypedPropertiesTest extends TestCase
                     new DataTypeMetadata(null)
                 )
             ],
-            $classMetadata->features[TypedProperties::FEATURES_KEY]
+            $classMetadata->features[TypedProperties::class]
         );
     }
 

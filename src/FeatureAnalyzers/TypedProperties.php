@@ -21,13 +21,6 @@ use ScaleUpStack\Metadata\Metadata\PropertyMetadata;
 
 final class TypedProperties implements FeatureAnalyzer
 {
-    const FEATURES_KEY = 'typedProperties';
-
-    public function name() : string
-    {
-        return self::FEATURES_KEY;
-    }
-
     public function extractMetadata(ClassMetadata $classMetadata) : array
     {
         $typedProperties = [];

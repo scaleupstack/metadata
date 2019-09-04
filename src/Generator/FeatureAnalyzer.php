@@ -16,8 +16,6 @@ use ScaleUpStack\Metadata\Metadata\ClassMetadata;
 
 interface FeatureAnalyzer
 {
-    public function name() : string;
-
     /**
      * NOTE: Do not manipulate the $classMetadata yourself but just return the extracted metadata.
      */

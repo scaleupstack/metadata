@@ -35,7 +35,6 @@ final class VirtualMethodsTest extends TestCase
     /**
      * @test
      * @covers ::extractMetadata()
-     * @covers ::name()
      */
     public function it_extracts_virtual_methods_metadata()
     {
@@ -67,7 +66,7 @@ final class VirtualMethodsTest extends TestCase
                     false
                 ),
             ],
-            $classMetadata->features[VirtualMethods::FEATURES_KEY]
+            $classMetadata->features[VirtualMethods::class]
         );
     }
 
