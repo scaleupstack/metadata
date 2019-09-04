@@ -1,6 +1,6 @@
 {
     "name": "scaleupstack/metadata",
-    "description": "Extendable PHP metadata analysis and pre-processing. Based on jms/metadata.",
+    "description": "Metadata analysis of PHP classes. Can be extended for your needs by feature analyzers. Based on jms/metadata.",
     "type": "library",
     "keywords": [
         "metadata",
@@ -8,7 +8,9 @@
         "property",
         "method",
         "annotations",
-        "reflection"
+        "reflection",
+        "virtual methods",
+        "union type"
     ],
     "autoload": {
         "psr-4": {

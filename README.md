@@ -1,10 +1,15 @@
 # ScaleUpStack/Metadata
 
-This library provides a flexible metadata structure for PHP classes (including methods, properties, and annotations). It is based on [schmittjoh/metadata].
+This library provides a flexible metadata structure for PHP classes (including methods, properties, and annotations). The metadata is extracted from the PHP source code of the class.
 
-The metadata is extracted from the PHP source code of the class. It reads DocBlock annotations using [ScaleUpStack/Annotations].
+You will be able to register feature analyzers (shipped with this library, or your own) that extend the metadata based on reflection, or the provided DocBlock annotations.
 
-You will be able to register your own feature analyzers that extend the metadata based on reflection, or the provided DocBlock annotations.
+Currently these additional feature analyzers are provided:
+
+* TypedProperties (including union types)
+* VirtualMethods
+
+This library is based on [schmittjoh/metadata]. It reads DocBlock annotations using [scaleupstack/annotations].
 
 
 ## Installation
@@ -12,20 +17,22 @@ You will be able to register your own feature analyzers that extend the metadata
 Use [Composer] to install this library:
 
 ```
-$ composer require scaleupstack/annotations dev-master
-$ composer require scaleupstack/metadata dev-master
+$ composer require scaleupstack/metadata
 ```
 
-(As ScaleUpStack/Annotations has no stable relase yet, you need to require it as well.)
 
 ## Introduction
 
-TODO: TBD
+This library is not yet documented. But perhaps [scaleupstack/easy-object] can be helpful to find out how to use it.
+
+TODO: to be done
 
 
 ## Current State
 
-This library is not yet documented and still under development. It will evolve in the context of [EasyObject].
+This library has been developed with a special intention in mind. It will evolve in the context of [scaeupstack/easy-object].
+
+If you are missing anything, feel free to contact me, or create a pull request.
 
 
 ## Contribute
@@ -50,9 +57,9 @@ Thomas Nunninger <thomas.nunninger@scaleupventures.com><br>
 
 
 [schmittjoh/metadata]: https://github.com/schmittjoh/metadata
-[ScaleUpStack/Annotations]: https://github.com/scaleupstack/annotations
+[scaleupstack/annotations]: https://github.com/scaleupstack/annotations
 [Composer]: https://getcomposer.org
-[EasyObject]: https://github.com/scaleupstack/easy-object
+[scaleupstack/easy-object]: https://github.com/scaleupstack/easy-object
 [issue tracker]: https://github.com/scaleupstack/metadata/issues
 [Git repository]: https://github.com/scaleupstack/metadata
 [LICENSE.md]: LICENSE.md
