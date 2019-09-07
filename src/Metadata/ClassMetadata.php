@@ -87,6 +87,9 @@ class ClassMetadata extends \Metadata\ClassMetadata
         );
     }
 
+    /**
+     * NOTE: Does not resolve "$this" or "self" to a fully qualified class name, but keeps them.
+     */
     public function fullyQualifiedDataTypeSpecification(?string $originalSpecification) : ?string
     {
         if (is_null($originalSpecification)) {
@@ -135,11 +138,11 @@ class ClassMetadata extends \Metadata\ClassMetadata
     /**
      * Returns if the data type specification corresponds to an object.
      *
-     * Union types and interfaces are not supported.
+     * NOTE: Union types and interfaces are not supported.
      */
-    public function isDataTypeSpecificationAnObject(?string $originalSpecification) : bool
+    public function isDataTypeSpecificationAnObject(?string $specification) : bool
     {
-        $fullyQualified = $this->fullyQualifiedDataTypeSpecification($originalSpecification);
+        $fullyQualified = $this->fullyQualifiedDataTypeSpecification($specification);
 
         if ('[]' === substr($fullyQualified, -2)) {
             $fullyQualified = substr($fullyQualified, 0, -2);
@@ -153,6 +156,36 @@ class ClassMetadata extends \Metadata\ClassMetadata
         }
 
         return class_exists($fullyQualified);
+    }
+
+    /**
+     * NOTES:
+     *
+     * - Throws an exception if the specification is not an object. (Check using self::isDataTypeSpecificationAnObject()
+     *   before).
+     *
+     * - Union types and interfaces are not supported.
+     */
+    public function fullyQualifiedClassNameOfDataTypeSpecification(string $specification) : string
+    {
+        if (! $this->isDataTypeSpecificationAnObject($specification))
+        {
+            throw new \RuntimeException(
+                sprintf(
+                    "Data type specification '%s' is not an object. (Interfaces and union types are not supported.)",
+                    $specification
+                )
+            );
+        }
+
+        if (
+            'self' === $specification ||
+            '$this' === $specification
+        ) {
+            return $this->name;
+        }
+
+        return $this->fullyQualifiedDataTypeSpecification($specification);
     }
 
     public function serialize() : string

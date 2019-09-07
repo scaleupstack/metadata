@@ -216,4 +216,80 @@ final class ClassMetadataTest extends TestCase
         // then the result is as expected as provided by the test's parameter
         $this->assertSame($expectedIsObject, $isObject);
     }
+
+    public function provides_data_type_specification_and_expected_class_name() : array
+    {
+        return [
+            [\DateTime::class, \DateTime::class],
+            ['ClassMetadata', ClassMetadata::class],
+            ['self', ClassForTesting::class],
+            ['$this', ClassForTesting::class],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_data_type_specification_and_expected_class_name
+     * @covers ::fullyQualifiedClassNameOfDataTypeSpecification()
+     */
+    public function it_resolves_a_data_type_specification_to_a_fully_qualified_class_name(
+        string $dataTypeSpecification,
+        string $expectedClassName
+    )
+    {
+        // given some ClassMetadata
+        $classMetadata = new ClassMetadata(
+            ClassForTesting::class,
+            [
+                'ScaleUpStack\Metadata\Metadata\ClassMetadata',
+            ],
+            new Annotations()
+        );
+        // and a data type specification as provided by the test's parameter
+
+        // when resolving the specification to a fully qualified class name
+        $className = $classMetadata->fullyQualifiedClassNameOfDataTypeSpecification($dataTypeSpecification);
+
+        // then the result is the expected class name as provided by the test's parameter
+        $this->assertSame($className, $expectedClassName);
+    }
+
+    public function provides_non_object_data_type_specifications() : array
+    {
+        return [
+            [\DateTimeInterface::class], // interfaces are not supported
+            ['int'],
+            [\DateTime::class . '|' . \Exception::class], // union types are not supported
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_non_object_data_type_specifications
+     * @covers ::fullyQualifiedClassNameOfDataTypeSpecification()
+     */
+    public function it_throws_an_exception_if_data_type_specification_is_no_object(string $specification)
+    {
+        // given some ClassMetadata
+        $classMetadata = new ClassMetadata(
+            ClassForTesting::class,
+            [
+                'ScaleUpStack\Metadata\Metadata\ClassMetadata',
+            ],
+            new Annotations()
+        );
+        // and a data type specification that is not object as provided by the test's parameter
+
+        // when resolving the specification to a fully qualified class name
+        // then an exception is thrown
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                "Data type specification '%s' is not an object. (Interfaces and union types are not supported.)",
+                $specification
+            )
+        );
+
+        $classMetadata->fullyQualifiedClassNameOfDataTypeSpecification($specification);
+    }
 }
