@@ -13,6 +13,7 @@
 namespace ScaleUpStack\Metadata\Tests\PhpUnit\Metadata;
 
 use ScaleUpStack\Annotations\Annotations;
+use ScaleUpStack\Metadata\Generator\FeatureAnalyzer;
 use ScaleUpStack\Metadata\Metadata\ClassMetadata;
 use ScaleUpStack\Metadata\Tests\Resources\ClassForTesting;
 use ScaleUpStack\Metadata\Tests\Resources\TestCase;
@@ -140,6 +141,9 @@ final class ClassMetadataTest extends TestCase
             ['ClassMetadata[]', 'ScaleUpStack\Metadata\ClassMetadata[]'],
 
             ['int[]|\DateTime', 'int[]|DateTime'],
+
+            ['self', 'self'],
+            ['$this', '$this'],
         ];
     }
 
@@ -170,5 +174,46 @@ final class ClassMetadataTest extends TestCase
         // then the specification was transformed to a fully qualified data type specification
         $this->assertSame($expectedLongSpecification, $longSpecification);
     }
-}
 
+    public function provides_data_type_specifications_and_if_they_are_an_object() : array
+    {
+        return [
+            ['bool', false],
+            ['int[]', false],
+            [\DateTime::class, true],
+            [\DateTime::class . '[]', true],
+            [\DateTime::class . '|int', false], // union types are not supported; TODO: is this ok?
+            ['ClassMetadata', true],
+            [null, false],
+            ['', false],
+            ['self', true],
+            ['$this', true],
+            [\DateTimeInterface::class, false], // interfaces are not supported
+            [FeatureAnalyzer::class, false],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_data_type_specifications_and_if_they_are_an_object
+     * @covers ::isDataTypeSpecificationAnObject()
+     */
+    public function it_checks_if_a_data_type_specification_is_an_object(?string $specification, bool $expectedIsObject)
+    {
+        // given some ClassMetadata
+        $classMetadata = new ClassMetadata(
+            ClassForTesting::class,
+            [
+                'ScaleUpStack\Metadata\Metadata\ClassMetadata',
+            ],
+            new Annotations()
+        );
+        // and a data type specification as provided by the test's parameter
+
+        // when checking if the data type specification is an object
+        $isObject = $classMetadata->isDataTypeSpecificationAnObject($specification);
+
+        // then the result is as expected as provided by the test's parameter
+        $this->assertSame($expectedIsObject, $isObject);
+    }
+}

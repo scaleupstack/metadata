@@ -132,6 +132,29 @@ class ClassMetadata extends \Metadata\ClassMetadata
         return implode('|', $specifications);
     }
 
+    /**
+     * Returns if the data type specification corresponds to an object.
+     *
+     * Union types and interfaces are not supported.
+     */
+    public function isDataTypeSpecificationAnObject(?string $originalSpecification) : bool
+    {
+        $fullyQualified = $this->fullyQualifiedDataTypeSpecification($originalSpecification);
+
+        if ('[]' === substr($fullyQualified, -2)) {
+            $fullyQualified = substr($fullyQualified, 0, -2);
+        }
+
+        if (
+            'self' === $fullyQualified ||
+            '$this' === $fullyQualified
+        ) {
+            return true;
+        }
+
+        return class_exists($fullyQualified);
+    }
+
     public function serialize() : string
     {
         return serialize(
